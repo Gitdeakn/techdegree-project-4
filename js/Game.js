@@ -8,6 +8,7 @@ class Game {
         this.missed = 0;
         this.phrases = [];
         this.activePhrase = null;
+        this.lastSelectedLetter = '';
         this.createPhrases() 
     }
     // Array of Phrases that get added onto the phrases empty array
@@ -37,7 +38,26 @@ class Game {
         const overlay = document.querySelector('#overlay')
         this.activePhrase = this.getRandomPhrase();
         overlay.style.visibility = "hidden";
-        
+        const letters = document.querySelectorAll('.key');
+        letters.forEach(function(element){
+            element.addEventListener('click', function(e){
+                const letterClicked = e.target.textContent;
+                game.lastSelectedLetter = letterClicked;
+                game.handleInteraction();
+            })
+        }) 
+    }
+
+    handleInteraction(){
+        console.log('handle indteration')
+        if (phrase.checkLetter()){
+            console.log('handle if statment')
+            phrase.showMatchedLetter();
+            
+            // check win
+        } else {
+            // remove life
+        }
     }
 }
 

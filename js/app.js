@@ -6,18 +6,15 @@
 
 // Sets up the game object
 const game = new Game();
+console.log(game)
 // Sets up the phrase object by selecting one of the random phrases from the game object
 const phrase = new Phrase(game.getRandomPhrase())
+phrase.addPhraseToDisplay()
 
 
-// console.log(game)
-// game.startGame()
-// console.log(game)
-// phrase.addPhraseToDisplay()
-// console.log(phrase)
 const startGameBtn = document.querySelector('#btn__reset')
-startGameBtn.addEventListener('click', game.startGame()
+startGameBtn.addEventListener('click', function (){
+    game.startGame()
+})
 
-
-)
-console.log(startGameBtn);
+// phrase.checkLetter();
