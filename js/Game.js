@@ -7,7 +7,7 @@ class Game {
 
     // Creates phrases for use in the game returns an array of phrases
     createPhrases() {
-        const arrayOne = ['Phrase One', 'Phrase Two', 'Phrase Three', 'Phrase Four', 'Phrase Five'];
+        const arrayOne = ['Snakes on a Plane', 'Three Days of the Condor', 'Good Will Hunting', 'The Last Emperor', 'No Country for Old Men'];
         const arrayTwo = [];
         arrayOne.forEach(phrase => arrayTwo.push(new Phrase(phrase)));
         return arrayTwo;
@@ -32,7 +32,6 @@ class Game {
     // If letter clicked it shows letter on the gameboard
     // If letter clicked does not match is removes a life from the gameboard
     handleInteraction(button) {
-        console.log('handle fired')
         button.disabled = true;
         if (this.activePhrase.checkLetter(button.textContent)) {
             button.classList.add('chosen');
@@ -100,7 +99,6 @@ class Game {
         const hearts = document.querySelectorAll('.tries');
         ul.innerHTML = '';
         this.missed = 0;
-        console.log(phraseLetters)
         phraseLetters.forEach(letter => {
             letter.classList.remove('chosen', 'wrong')
             letter.disabled = false;
