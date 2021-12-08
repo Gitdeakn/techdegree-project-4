@@ -1,74 +1,45 @@
-/* Treehouse FSJS Techdegree
- * Project 4 - OOP Game App
- * Phrase.js */
-
 class Phrase {
     constructor(phrase) {
         this.phrase = phrase.toLowerCase();
     }
 
+    // Display phrase on game board
     addPhraseToDisplay() {
-        const myList = document.getElementsByTagName('ul')[0]
-        for (let i = 0; i < this.phrase.length; i++) {
-            let newListItem = document.createElement('li');
-            newListItem.textContent = this.phrase[i];
-            if (newListItem.textContent === ' ') {
-                newListItem.className = 'space'
-            } else {
-                newListItem.classList.add('hide', 'letter', this.phrase[i])
+        const ul = document.querySelector('ul');
+        let letters = this.phrase.split('');
+        letters.forEach(letter => {
+            const li = document.createElement('li');
+            if (letter !== ' ') {
+                li.classList.add(letter, 'hide', 'letter');
+                li.textContent = letter;
+                ul.append(li);
             }
-            myList.appendChild(newListItem);
-        }
+            else {
+                li.classList.add('space')
+                li.textContent = letter;
+                ul.append(li);
+            }
+        })
     }
-
-    checkLetter() {
-        const newListItemCollection = document.querySelectorAll('.hide');
-        for (let i = 0; i < newListItemCollection.length; i++) {
-            const letterClicked = game.lastSelectedLetter
-            const phraseLetter = newListItemCollection[i].textContent;
-            console.log(letterClicked);
-            console.log(phraseLetter);
-            console.log('----')
-            if (letterClicked === phraseLetter) {
-                console.log(true);
-                return true;
-            } 
-        }
-
-            console.log(false);
+    // Checks if passed letter is in phrase
+    // @param (string) letter - Letter to check
+    checkLetter(letter) {
+        if (this.phrase.includes(letter)) {
+            return true;
+        } else {
             return false;
-        
-    }
-    showMatchedLetter() {
-        console.log('matchedcalled')
-        const newListItemCollection = document.querySelectorAll('.hide')
-        for (let i = 0; i < newListItemCollection.length; i++) {
-            if (game.lastSelectedLetter === newListItemCollection[i].textContent) {
-                newListItemCollection[i].classList.remove('hide')
-                newListItemCollection[i].classList.add('show')
-                console.log('match')
-            }
         }
+    }
+
+    // Displays passed letter on screen after a match is found
+    //@param (string) letter - Letter to display
+    showMatchedLetter(letter) {
+        const phraseLetters = document.querySelectorAll('.letter')
+        phraseLetters.forEach(phraseLetter => {
+            if (phraseLetter.textContent === letter) {
+                phraseLetter.classList.add('show')
+                phraseLetter.classList.remove('hide')
+            }
+        })
     }
 }
-
-
-
-
-
-
-// const hearts = document.querySelectorAll('.tries');
-                    // console.log(hearts)
-
-// newListItemCollection[i].classList.remove('hide')
-                        // newListItemCollection[i].classList.add('show')
-                        // console.log('match')
-
-// if (letterClicked !== phraseLetter){
-
-                    //     let tries = 4;
-                    //     hearts[0].classList.remove('tries');
-                    //     tries -= 1;
-                    //     console.log(tries);
-
-                    // }

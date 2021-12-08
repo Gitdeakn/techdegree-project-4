@@ -1,20 +1,16 @@
-/* Treehouse FSJS Techdegree
- * Project 4 - OOP Game App
- * app.js */
-// const phrase = new Phrase('Life is like a box of chocaltes');
+let game;
+const startGameButton = document.querySelector('#btn__reset');
+
+startGameButton.addEventListener('click', () => {
+    game = new Game();
+    game.startGame();
+    const keys = document.querySelectorAll('.key')
+    console.log(keys);
+    keys.forEach(element => element.addEventListener('click', (e) => {
+        game.handleInteraction(e.target)
+        console.log('handle fired')
+        console.log('break')
+    }));
+});
 
 
-// Sets up the game object
-const game = new Game();
-console.log(game)
-// Sets up the phrase object by selecting one of the random phrases from the game object
-const phrase = new Phrase(game.getRandomPhrase())
-phrase.addPhraseToDisplay()
-
-
-const startGameBtn = document.querySelector('#btn__reset')
-startGameBtn.addEventListener('click', function (){
-    game.startGame()
-})
-
-// phrase.checkLetter();
