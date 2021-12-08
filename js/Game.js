@@ -38,12 +38,12 @@ class Game {
                 this.gameOver(true);
             }
         } else {
-            if (this.missed < 5) {
+            // if (this.missed < 5) {
             button.classList.add('wrong')
             this.removeLife()
-            } else {
-                this.gameOver(false)
-            }
+            // } else {
+            //     this.gameOver(false)
+            // }
         }
     }
 
@@ -61,13 +61,19 @@ class Game {
     removeLife() {
         const hearts = document.querySelectorAll('.tries')
         const heart = hearts[this.missed]
+        this.missed++;
+        if (this.missed < 5){
         let img = heart.children[0]
         let src = img.getAttribute('src')
         if (src === 'images/liveHeart.png') {
             img.removeAttribute('images/liveHeart.png')
             img.setAttribute('src', 'images/lostHeart.png')
         }
-        this.missed++;
+        
+    } else {
+        this.gameOver(false)
+    }
+        
     }
 
     // Displays start screen with a message based on win or loss
@@ -89,12 +95,13 @@ class Game {
         const ul = document.querySelector('ul');
         const phraseLetters = document.querySelectorAll('.key');
         const hearts = document.querySelectorAll('.tries');
-        console.log(hearts)
+        // console.log(hearts)
         ul.innerHTML = '';
         this.missed = 0;
-        console.log(phraseLetters);
-        console.log(ul);
-        console.log(this.missed)
+        // console.log(phraseLetters);
+        // console.log(ul);
+        // console.log(this.missed)
+        console.log(phraseLetters)
         phraseLetters.forEach(letter => {
             letter.classList.remove('chosen', 'wrong')
             letter.disabled = false;
