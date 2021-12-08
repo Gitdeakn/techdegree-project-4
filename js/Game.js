@@ -29,20 +29,22 @@ class Game {
     // If letter clicked does not match is removes a life from the gameboard
 
     handleInteraction(button) {
-
+        console.log('handle fired')
         button.disabled = true;
         if (this.activePhrase.checkLetter(button.textContent)) {
             button.classList.add('chosen');
             this.activePhrase.showMatchedLetter(button.textContent)
-            console.log('letter matched');
             if (this.checkForWin()) {
                 this.gameOver(true);
             }
         } else {
+            if (this.missed < 5) {
             button.classList.add('wrong')
             this.removeLife()
+            } else {
+                this.gameOver(false)
+            }
         }
-
     }
 
     //     // Checks to see if the player has revealed all of the letters
@@ -57,48 +59,49 @@ class Game {
 
     // Remove life from the scoreboard 
     removeLife() {
-        if (this.missed < 4) {
-            const hearts = document.querySelectorAll('.tries')
-            const heart = hearts[this.missed]
-            let img = heart.children[0]
-            let src = img.getAttribute('src')
-            if (src === 'images/liveHeart.png') {
-                img.removeAttribute('images/liveHeart.png')
-                img.setAttribute('src', 'images/lostHeart.png')
-            }
-            this.missed++;
-        } else {
-            img.removeAttribute('images/lostHeart.png')
-            img.setAttribute('src', 'images/liveHeart.png')
-            this.gameOver(false)
+        const hearts = document.querySelectorAll('.tries')
+        const heart = hearts[this.missed]
+        let img = heart.children[0]
+        let src = img.getAttribute('src')
+        if (src === 'images/liveHeart.png') {
+            img.removeAttribute('images/liveHeart.png')
+            img.setAttribute('src', 'images/lostHeart.png')
         }
+        this.missed++;
     }
 
     // Displays start screen with a message based on win or loss
     gameOver(gameWon) {
-        const ul = document.querySelector('ul');
-        const phraseLetters = document.querySelectorAll('.key');
         const overlay = document.querySelector('#overlay');
         const h1 = document.querySelector('#game-over-message')
         if (gameWon) {
             overlay.style.display = 'flex'
             h1.textContent = 'You Won Nice Job!'
-            ul.innerHTML = '';
-            console.log(this.missed)
-            phraseLetters.forEach(letter => {
-                letter.classList.remove('chosen', 'wrong')
-                letter.disabled = false;
-            })
-
+            this.resetGame()
         } else {
             overlay.style.display = 'flex'
             h1.textContent = 'Sorry, better luck next time!'
-            ul.innerHTML = '';
-            console.log(this.missed)
-            phraseLetters.forEach(letter => {
-                letter.classList.remove('chosen', 'wrong')
-                letter.disabled = false;
-            })
+            this.resetGame()
         }
+    }
+
+    resetGame() {
+        const ul = document.querySelector('ul');
+        const phraseLetters = document.querySelectorAll('.key');
+        const hearts = document.querySelectorAll('.tries');
+        console.log(hearts)
+        ul.innerHTML = '';
+        this.missed = 0;
+        console.log(phraseLetters);
+        console.log(ul);
+        console.log(this.missed)
+        phraseLetters.forEach(letter => {
+            letter.classList.remove('chosen', 'wrong')
+            letter.disabled = false;
+        })
+        hearts.forEach(heart => {
+            heart.children[0].setAttribute('src', 'images/liveHeart.png')
+            heart.children[0].removeAttribute('images/lostHeart.png')
+        })
     }
 }
